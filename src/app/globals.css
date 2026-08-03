@@ -1,0 +1,287 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0b14;
+  --color-surface: #14162a;
+  --color-surface-2: #171933;
+  --color-surface-3: #10111f;
+  --color-primary: #6c63ff;
+  --color-primary-end: #4a90d9;
+  --color-cyan: #06b6d4;
+  --color-gold: #ffd65c;
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #fbbf24;
+  --color-text: #f1f1f8;
+  --color-text-muted: #9ca0c0;
+
+  --font-heading: var(--font-poppins), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-display: var(--font-playfair), "Georgia", serif;
+
+  --color-accent: #8b85ff;
+  --color-ink: #0a0b14;
+
+  --shadow-glow: 0 0 20px rgba(108, 99, 255, 0.35);
+  --shadow-glow-lg: 0 0 28px rgba(108, 99, 255, 0.55);
+  --shadow-glow-soft: 0 0 40px rgba(108, 99, 255, 0.12);
+
+  --animate-fade-in-up: fadeInUp 0.5s ease;
+  --animate-glow-pulse: glowPulse 2.2s ease-in-out infinite;
+  --animate-toast-in: toastIn 0.25s ease;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 18px rgba(108, 99, 255, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 32px rgba(108, 99, 255, 0.6);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(108, 99, 255, 0);
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: rgba(108, 99, 255, 0.35);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-end));
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-end));
+  color: #fff;
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.35);
+  transition: box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 0 28px rgba(108, 99, 255, 0.55);
+}
+
+.btn-primary:disabled {
+  box-shadow: none;
+}
+
+.btn-outline {
+  border: 1px solid rgba(108, 99, 255, 0.4);
+  color: var(--color-accent);
+  background: rgba(108, 99, 255, 0.05);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(108, 99, 255, 0.1);
+}
+
+.card-surface {
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glow-border {
+  border: 1px solid rgba(108, 99, 255, 0.3);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 25%, rgba(255, 255, 255, 0.12) 37%, rgba(255, 255, 255, 0.06) 63%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.status-dot-active {
+  animation: statusPulse 1.8s ease-in-out infinite;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-2) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+@media (max-width: 640px) {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ============================================================
+   NEXORA SITE — user-facing storefront scope
+   "Simpel & Mewah": warm charcoal + champagne gold + serif.
+   Admin stays untouched: these overrides only apply inside `.site`.
+   ============================================================ */
+.site {
+  --color-bg: #0d0c0a;
+  --color-surface: #16130f;
+  --color-surface-2: #1d1914;
+  --color-surface-3: #120f0c;
+  --color-primary: #c9a15a;
+  --color-primary-end: #e3c88f;
+  --color-cyan: #c9a15a;
+  --color-gold: #c9a15a;
+  --color-text: #f2ede2;
+  --color-text-muted: #a39a89;
+  --color-success: #6fbf8f;
+  --color-danger: #e07a6a;
+  --color-warning: #d9a441;
+  --color-accent: #dfc48f;
+  --color-ink: #1a1610;
+  --shadow-glow: 0 0 0 transparent;
+  --shadow-glow-lg: 0 0 0 transparent;
+  --shadow-glow-soft: 0 0 0 transparent;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.site ::selection {
+  background: rgba(201, 161, 90, 0.35);
+}
+
+.site .font-heading {
+  font-family: var(--font-display), "Georgia", serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.font-display {
+  font-family: var(--font-display), "Georgia", serif;
+}
+
+.site .gradient-text {
+  background: linear-gradient(135deg, #e3c88f, #a37e3d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.site .gradient-bg {
+  background: linear-gradient(135deg, #c9a15a, #e3c88f);
+  color: var(--color-ink);
+}
+
+.site .card-surface {
+  background: linear-gradient(180deg, #191511, #15120e);
+  border: 1px solid rgba(201, 161, 90, 0.14);
+}
+
+.site .glow-border {
+  border: 1px solid rgba(201, 161, 90, 0.35);
+}
+
+.site .btn-primary {
+  background: #c9a15a;
+  color: #1a1610;
+  box-shadow: none;
+}
+
+.site .btn-primary:hover:not(:disabled) {
+  background: #dab676;
+  box-shadow: none;
+}
+
+.site .btn-outline {
+  border: 1px solid rgba(201, 161, 90, 0.4);
+  color: #dfc48f;
+  background: rgba(201, 161, 90, 0.06);
+}
+
+.site .btn-outline:hover {
+  background: rgba(201, 161, 90, 0.12);
+}
+
+.site .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(201, 161, 90, 0.07) 25%,
+    rgba(201, 161, 90, 0.16) 37%,
+    rgba(201, 161, 90, 0.07) 63%
+  );
+  background-size: 400px 100%;
+}
+
+.site .status-dot-active {
+  animation: goldPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 161, 90, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(201, 161, 90, 0);
+  }
+}
+
+.site input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-2) inset;
+}

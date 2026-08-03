@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String?
+  password     String
+  role         Role     @default(MEMBER)
+  balance      Int      @default(0)
+  referralCode String?  @unique
+  referredBy   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  transactions Transaction[]
+  deposits     Deposit[]
+}
+
+enum Role {
+  MEMBER
+  RESELLER
+  AGEN
+  ADMIN
+}
+
+model Game {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  image       String
+  banner      String?
+  description String?
+  category    String   @default("mobile")
+  fields      Json
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products Product[]
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  gameId        String
+  game          Game      @relation(fields: [gameId], references: [id])
+  name          String
+  sku           String    @unique
+  buyPrice      Int
+  sellPrice     Int
+  resellerPrice Int?
+  agenPrice     Int?
+  promoPrice    Int?
+  promoEndDate  DateTime?
+  isActive      Boolean   @default(true)
+  sortOrder     Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  transactions Transaction[]
+
+  @@index([gameId])
+}
+
+model Transaction {
+  id            String            @id @default(cuid())
+  invoiceId     String            @unique
+  userId        String?
+  user          User?             @relation(fields: [userId], references: [id])
+  productId     String
+  product       Product           @relation(fields: [productId], references: [id])
+  gameAccount   Json
+  amount        Int
+  paymentMethod String
+  paymentRef    String?
+  paymentUrl    String?
+  vipaymentRef  String?
+  status        TransactionStatus @default(PENDING)
+  paidAt        DateTime?
+  processedAt   DateTime?
+  completedAt   DateTime?
+  failedReason  String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([productId])
+  @@index([status])
+}
+
+enum TransactionStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SUCCESS
+  FAILED
+  REFUNDED
+  EXPIRED
+}
+
+model Deposit {
+  id         String        @id @default(cuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id])
+  amount     Int
+  method     String
+  paymentRef String?
+  status     DepositStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([userId])
+}
+
+enum DepositStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
